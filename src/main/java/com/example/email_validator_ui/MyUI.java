@@ -7,6 +7,7 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -27,12 +28,23 @@ public class MyUI extends UI {
         final VerticalLayout layout = new VerticalLayout();
         
         final TextField name = new TextField();
-        name.setCaption("Type your name here:");
+        name.setCaption("Type E-mail here:");
 
-        Button button = new Button("Click Me");
+        Button button = new Button("Validate");
         button.addClickListener( e -> {
-            layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!"));
+        	EmailValidator p = new EmailValidator();
+        	//if all test pass, email is validated
+        	if(p.validate(name.getValue()) == 5){
+        		layout.addComponent(new Label("Correct! " + name.getValue() 
+        				+ " is a validated email."));
+        		
+        	}
+        	//if not all test pass, not validated
+        	else{
+        		
+        		layout.addComponent(new Label("Sorry~ " + name.getValue() 
+        				+ " is not a validated email."));
+        	}
         });
         
         layout.addComponents(name, button);
